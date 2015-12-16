@@ -1,0 +1,99 @@
+
+@import "compass/reset";
+$highlight: #ffffff;
+$bg-color: #efefef;
+$text-color: #4f4f4f;
+$secondy-text-color: #D9D9D9;
+$button-color: #6c6c6c;
+
+@mixin clearfix() {
+	clear: both;
+}
+
+body {
+	background-color: $bg-color;
+	font-family: 'Open Sans', Sans-serif;
+	font-size: 62.5%;
+	text-align: center;
+}
+
+
+.hero {
+	max-width: 100%;
+	margin: 0 auto;
+	
+	background-size: cover;
+	color: $highlight;
+	padding-bottom: 4.5em;
+	
+
+
+	header {
+		img {
+			width: 8em;
+			height: 2em;
+			float: left;
+		}
+
+		ul {
+			float: right;		
+			li {
+				float:left;
+				margin: 1em .5em;
+				padding: .5em 1em;
+				border: 1px solid transparent;
+				border-radius: 2px;
+
+				&:last-child {
+					border: 1px solid $highlight;
+				}
+			}	
+		}
+
+	   &:after {
+	   	 content: "";
+		 display: table;
+		 @include clearfix;
+	   }
+		
+	}
+
+	h1:before {
+	   	 content: "";
+		 display: table;
+		 @include clearfix;
+	}
+
+	h1 {
+		font-size: 4em;
+		font-weight: bold;
+		padding: 1em 0 .5em 0;
+	}
+
+	h2 {
+		font-size: 2em;
+		color: #d9dada;
+	}
+
+	form {
+		padding: 2em 0 4em 0;
+
+		input[type="text"] {
+			padding: 1em;
+			border: 0;
+			width: 18em;
+			border-radius: 2px 0 0 2px;
+			opacity: .3px;			
+		}
+
+		input[type="button"] {
+			text-transform: uppercase;
+			padding: 1em;
+			border: 0;
+			width: 6em;
+			border-radius:  0  2px 2px 0 ;
+			background-color: lightgreen;
+		}
+
+	}
+}

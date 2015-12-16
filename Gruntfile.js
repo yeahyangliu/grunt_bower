@@ -1,83 +1,55 @@
-/*global module:false*/
 module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    // Metadata.
     pkg: grunt.file.readJSON('package.json'),
-    banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-      '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-      '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-      '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-      ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
-    // Task configuration.
-    concat: {
-      options: {
-        banner: '<%= banner %>',
-        stripBanners: true
-      },
-      dist: {
-        src: ['lib/<%= pkg.name %>.js'],
-        dest: 'dist/<%= pkg.name %>.js'
-      }
-    },
     uglify: {
       options: {
-        banner: '<%= banner %>'
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
-      dist: {
-        src: '<%= concat.dist.dest %>',
-        dest: 'dist/<%= pkg.name %>.min.js'
+      build: {
+        src: 'src/<%= pkg.name %>.js',
+        dest: 'build/<%= pkg.name %>.min.js'
       }
     },
-    jshint: {
+    bower: {  
+      install: {
+        options: {
+                "targetDir": "./public/js/lib",
+                "layout": "byComponent",
+                "install": true,
+                "verbose": false,
+                "cleanTargetDir": false
+              }
+          }
+      },
+    browserSync: {
+      bsFiles: {
+          src : 'assets/css/*.css'
+     },
       options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        boss: true,
-        eqnull: true,
-        browser: true,
-        globals: {}
-      },
-      gruntfile: {
-        src: 'Gruntfile.js'
-      },
-      lib_test: {
-        src: ['lib/**/*.js', 'test/**/*.js']
-      }
-    },
-    qunit: {
-      files: ['test/**/*.html']
-    },
-    watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
-      },
-      lib_test: {
-        files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'qunit']
-      }
+        server: {
+            baseDir: "./"
+        }
     }
-  });
+  },
+   compass: {
+        app: 
+        {
+          options: {
+          sassDir: 'sass',
+          cssDir: 'stylesheets'
+          }
+        }
+    }
+    });
 
-  bower: {    install: {      options: {        targetDir: './public/js/lib',        layout: 'byComponent',        install: true,        verbose: false,        cleanTargetDir: false,        cleanBowerDir: false,        bowerOptions: {}      }    }  }
+  // 加载包含 "uglify" 任务的插件。
+  require('load-grunt-tasks')(grunt);
 
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+  // 默认被执行的任务列表。
+  grunt.registerTask('default', ['uglify', 'compass']);
 
-  // Default task.
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.registerTask('serve', ['uglify', 'compass', 'browserSync']);
 
 };

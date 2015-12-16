@@ -1,10 +1,13 @@
 {
   "name": "grunt_bower",
-  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
   "authors": [
-    "YANG Liu <yeah_yangliu@163.com>"
+    "yangliu"
   ],
-  "license": "MIT",
+  "license": "ISC",
+  "homepage": "https://github.com/yeahyangliu/grunt_bower",
+  "moduleType": [],
   "ignore": [
     "**/.*",
     "node_modules",
@@ -13,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "angularjs": "~1.3.8"
+    "angular": "angularjs#~1.4.8",
+    "jquery": "~2.1.4"
   }
 }
